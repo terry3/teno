@@ -3,22 +3,19 @@ EXE=teno
 export VPATH += ../src
 export VPATH += ../obj
 export VPATH += ../src/pub
-export VPATH += ../src/log/inc
-
-obj-log = log_api.o
-
+include ../var.mk	
 obj-test = main.o
 
-TENO_SRC_PATH = ../src
-TENO_OBJ_PATH = $(abspath ../obj)
+export TENO_SRC_PATH = $(abspath ../src)
+export TENO_OBJ_PATH = $(abspath ../obj)
+export TENO_BUILD_PATH = $(abspath ../build)
 
-TENO_INC_PATH = -I../src/pub -I../src/log/inc
-
-TENO_BUILD_PATH = ../build
+export TENO_INC_PATH += -I$(abspath ../src/pub) \
+						-I$(abspath ../src/log/inc)
 
 $(EXE): $(obj-test) $(obj-log)
 	cd $(TENO_SRC_PATH) && $(MAKE)
-	$(CC) -o  $(TENO_BUILD_PATH)/$@ $^
+	$(CC) -o  $(TENO_BUILD_PATH)/$@ $(TENO_OBJ_PATH)/$^
 
 $(obj-test): %.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $(TENO_OBJ_PATH)/$@ $(TENO_INC_PATH)
