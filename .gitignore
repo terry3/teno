@@ -5,3 +5,4 @@
 *.err
 *.obj
 *.exe
+*.o
