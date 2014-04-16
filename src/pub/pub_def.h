@@ -10,14 +10,15 @@
 #define T_FALSE  0
 
 /* data type */
-#define T_NULL null
-#define T_UINT32  unsighned int
-#define T_INT32   int
-#define T_UINT16  unsighned short
-#define T_INT16   short 
-#define T_UINT8   unsighned char
-#define T_INT8    char
-#define T_CHAR    char
+#define T_NULL    null
+typedef unsigned int   T_UINT32;
+typedef int            T_INT32;
+typedef unsigned short T_UINT16;
+typedef short          T_INT16;
+typedef unsigned char  T_UINT8;
+typedef char           T_INT8;
+typedef char           T_CHAR;
+typedef unsigned int   F_RET;
 
 /* return if p is null */
 #define P_NULL_RET_NULL(p) \

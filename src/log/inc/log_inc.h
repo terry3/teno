@@ -2,6 +2,8 @@
 #ifndef _LOG_INC_H_
 #define _LOG_INC_H_
 
+#include "pub_inc.h"
+
 #include "log_def.h"
 #include "log_api.h"
 
