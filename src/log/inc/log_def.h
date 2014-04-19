@@ -7,14 +7,15 @@
 #endif 
 
 /* log level*/
-enum T_LOG_LEVEL
+typedef enum E_T_LOG_LEVEL
 {
     INFORMATION = 0,
     WARNING,
     ERR,
     EMERGENCY,
     DEBUG, // DEBUG is the Highest level
-};
+    LOG_LEVEL_BUTT,
+}T_LOG_LEVEL;
 
 #endif /* _LOG_DEF_H_ */
 
