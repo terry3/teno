@@ -28,7 +28,7 @@ all-files = $(notdir $(wildcard $(TENO_SRC_PATH)/pub/*.h)) \
 
 $(T_EXE): $(obj-test) $(all-files)
 	cd $(TENO_SRC_PATH) && $(MAKE)
-	$(CC) -o  $@ $(TENO_OBJ_PATH)/*
+	$(CC) $(CFLAGS) $(TENO_OBJ_PATH)/* -o  $@ 
 
 $(obj-test): %.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $(TENO_OBJ_PATH)/$@ $(TENO_INC_PATH)
