@@ -6,3 +6,6 @@
 *.obj
 *.exe
 *.o
+/obj/
+/build/
+/si/
