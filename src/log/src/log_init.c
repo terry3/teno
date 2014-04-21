@@ -17,6 +17,5 @@ F_RET log_init()
     printf ("log_init success.\n");
     printf ("log_init gulLogFileSize=[%d].\n", gulLogFileSize);
 
-    
     return F_SUCCESS;
 }
