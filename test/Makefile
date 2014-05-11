@@ -30,7 +30,7 @@ $(T_EXE): $(obj-test) $(all-files)
 	cd $(TENO_SRC_PATH) && $(MAKE)
 	$(CC) $(CFLAGS) $(TENO_OBJ_PATH)/* -o  $@ 
 
-$(obj-test): %.o:%.c
+$(obj-test): %.o:%.c $(TENO_PUB_HEADER)
 	$(CC) -c $(CFLAGS) $< -o $(TENO_OBJ_PATH)/$@ $(TENO_INC_PATH)
 
 .PHONY:clean

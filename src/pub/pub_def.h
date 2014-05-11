@@ -33,12 +33,15 @@ typedef unsigned char  T_TOGGLE;
     }
 
 /* return ret if p is null */
-#define P_NULL_RET(p, ret) \
-    if (T_NULL == p)       \
-    {                      \
-        return ret;        \
+#define P_NULL_RET(p, ret)                                                 \
+    if (T_NULL == p)                                                       \
+    {                                                                      \
+        return ret;                                                        \
     }
-
+/*
+  printf("[%s]:[%s]:(%d):Null pointer.\n",                              \
+  __FILE__, __FUNCTION__, __LINE__);                                    \
+*/
 /* function return type */
 typedef enum E_F_RET_TYPE
 {

@@ -10,4 +10,7 @@
 /* set log level */
 extern F_RET log_set_level() ;
 
+/* get log level */
+extern F_RET log_get_level(T_UINT32 *level);
+
 #endif /* _LOG_API_H_ */
