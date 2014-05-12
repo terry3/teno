@@ -15,6 +15,7 @@
 
 /* data type */
 #define T_NULL         NULL
+#define T_VOID         void
 typedef unsigned int   T_UINT32;
 typedef int            T_INT32;
 typedef unsigned short T_UINT16;
@@ -38,6 +39,13 @@ typedef unsigned char  T_TOGGLE;
     {                                                                      \
         return ret;                                                        \
     }
+
+#define T_CHECK_RET(t, d, ret)                                           \
+    if (d != p)                                                          \
+    {                                                                    \
+        return ret;                                                      \
+    }
+
 /*
   printf("[%s]:[%s]:(%d):Null pointer.\n",                              \
   __FILE__, __FUNCTION__, __LINE__);                                    \
