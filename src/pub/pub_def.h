@@ -7,6 +7,9 @@
 #define _PUB_DEF_H_
 
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 #define T_OK  0
 #define T_ERR 1
 
@@ -41,7 +44,7 @@ typedef unsigned char  T_TOGGLE;
     }
 
 #define T_CHECK_RET(t, d, ret)                                           \
-    if (d != p)                                                          \
+    if (d != t)                                                          \
     {                                                                    \
         return ret;                                                      \
     }
@@ -57,5 +60,9 @@ typedef enum E_F_RET_TYPE
     F_FAILURE,
     F_BUTT,
 }F_RET_TYPE;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PUB_DEF_H_ */

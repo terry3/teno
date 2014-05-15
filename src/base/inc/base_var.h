@@ -3,6 +3,14 @@
 #ifndef _BASE_VAR_H_
 #define _BASE_VAR_H_
 
-extern T_LIST *g_teno_list = T_NULL;
+#ifdef __cplusplus
+extern "C"{
+#endif
+extern T_LIST *g_teno_list;
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _BASE_VAR_H_ */

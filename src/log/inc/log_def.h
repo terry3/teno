@@ -2,9 +2,13 @@
 #ifndef _LOG_DEF_H_
 #define _LOG_DEF_H_
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 #ifdef T_DEBUG_MODE
 #define TERRY3_DEBUG
-#endif 
+#endif
 
 /* log level*/
 typedef enum E_T_LOG_LEVEL
@@ -16,6 +20,11 @@ typedef enum E_T_LOG_LEVEL
     DEBUG, // DEBUG is the Highest level
     LOG_LEVEL_BUTT,
 }T_LOG_LEVEL;
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _LOG_DEF_H_ */
 

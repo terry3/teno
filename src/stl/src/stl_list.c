@@ -1,5 +1,5 @@
 #include "pub_def.h"
-#include "stl_list.c"
+#include "stl_list.h"
 
 
 F_RET stl_list_create(T_LIST **stl_list)
@@ -7,7 +7,7 @@ F_RET stl_list_create(T_LIST **stl_list)
     T_LIST *t_list = T_NULL;
     P_NULL_RET(stl_list, T_ERR);
 
-    t_list = (T_LIST*)malloc(sizeof(t_list));
+    t_list = (T_LIST *)malloc(sizeof(t_list));
     P_NULL_RET(t_list, T_ERR);
 
     t_list->head = T_NULL;
@@ -21,7 +21,7 @@ F_RET stl_list_create(T_LIST **stl_list)
 F_RET stl_list_insert(T_LIST *stl_list, T_VOID *stl_node, T_UINT32 node_size)
 {
     T_LIST_NODE *tmp_node = T_NULL;
-    T_LIST_NODE *t_node = (T_LIST_NODE)malloc(sizeof(t_node) + node_size);
+    T_LIST_NODE *t_node = (T_LIST_NODE *)malloc(sizeof(t_node) + node_size);
     T_LIST_NODE *t_head = T_NULL;
 
     P_NULL_RET(stl_list, T_ERR);
@@ -45,6 +45,6 @@ F_RET stl_list_insert(T_LIST *stl_list, T_VOID *stl_node, T_UINT32 node_size)
         stl_list->head = t_node;
         t_node->next = tmp_node;
     }
-
+    stl_list->size++;
     return T_OK;
 }

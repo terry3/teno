@@ -9,5 +9,13 @@
 #include "log_var.h"
 #include "log_init.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _LOG_INC_H_ */

@@ -3,7 +3,9 @@
 #ifndef _T_LIST_H_
 #define _T_LIST_H_
 
-
+#ifdef __cplusplus
+extern "C"{
+#endif
 /* just a simple list. */
 
 /* list node*/
@@ -24,5 +26,8 @@ typedef struct
 /* function declare here */
 extern F_RET stl_list_create(T_LIST **stl_list);
 extern F_RET stl_list_insert(T_LIST *stl_list, T_VOID *stl_node, T_UINT32 node_size);
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _T_LIST_H_ */
