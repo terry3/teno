@@ -9,6 +9,9 @@
 /obj/
 /build/
 /si/
-/src/GPATH
-/src/GRTAGS
-/src/GTAGS
+/src/update_gtags.pl
+/test/gtest-1.7.0/
+/update_gtags.pl
+/GPATH
+/GRTAGS
+/GTAGS
