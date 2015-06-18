@@ -92,10 +92,6 @@ int main(int argc, char *argv[])
         teno_msg_send(ps_msg);
     }
 
-    while (CLI_TOGGLE)
-    {
-    }
-
     pthread_join(g_s_service[TENO_SERVICE_CLI].s_tid, T_NULL);
 
     return 0;

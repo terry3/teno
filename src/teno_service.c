@@ -1,4 +1,4 @@
-﻿#include "teno.h"
+#include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
@@ -40,6 +40,7 @@ T_VOID* teno_service_proc(T_VOID *p_param)
     ps_msg_queue = &(ps_service->s_msg_queue);
     for (;;)
     {
+        /* 阻塞pop */
         ps_msg = (T_MSG*)teno_mq_pop_queue(ps_msg_queue);
 
         if (ps_service->f_proc)
