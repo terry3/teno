@@ -80,7 +80,7 @@ typedef unsigned char  T_TOGGLE;
 #define FR_RET(_ret)                            \
     if (T_OK != (_ret))                         \
     {                                           \
-  printf("[%s]:[%s]:(%d):Null pointer.\n",      \
+  printf("[%s]:[%s]:(%d):return failured.\n",      \
   __FILE__, __FUNCTION__, __LINE__);            \
         return (_ret);                          \
     }

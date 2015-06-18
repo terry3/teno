@@ -33,6 +33,8 @@ T_VOID* teno_monitor_proc(T_VOID *p_param)
 
 F_RET teno_monitor_init()
 {
+    F_RET ul_ret = NULL_UINT32;
+
     g_s_service[TENO_SERVICE_MONITOR].ul_sid = TENO_SERVICE_MONITOR;
     g_s_service[TENO_SERVICE_MONITOR].f_proc = T_NULL;
     g_s_service[TENO_SERVICE_MONITOR].b_used = T_TRUE;
@@ -40,7 +42,9 @@ F_RET teno_monitor_init()
     memset(&(g_s_service[TENO_SERVICE_MONITOR].s_msg_queue),
            0,
            sizeof(g_s_service[TENO_SERVICE_MONITOR].s_msg_queue));
-
+    ul_ret = teno_mq_init_queue(
+             &(g_s_service[TENO_SERVICE_MONITOR].s_msg_queue));
+    FR_RET(ul_ret);
     /* 创建monitor service线程 */
     (T_VOID)T_THREAD_CREATE(g_s_service[TENO_SERVICE_MONITOR].s_tid,
                             teno_monitor_proc,

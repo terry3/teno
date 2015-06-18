@@ -1,3 +1,5 @@
+#include "teno_msg_type.h"
+
 #ifndef TENO_MSG_H
 #define TENO_MSG_H
 

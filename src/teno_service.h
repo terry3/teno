@@ -4,6 +4,7 @@
 #define TENO_SERVICE_H
 
 typedef F_RET (*SERVICE_PROC)(T_MSG* ); /* Service回调函数原型 */
+typedef F_RET (*SERVICE_INIT)(); /* Service初始化函数原�?*/
 
 typedef enum _teno_service_type
 {
@@ -22,15 +23,14 @@ typedef struct _teno_service
     T_UINT32        ul_sid;     /* service id */
     T_THREAD_T      s_tid;      /* service thread id */
     T_MSG_QUEUE     s_msg_queue; /* msg queue */
-    SERVICE_PROC    f_proc;      /* service callback */
+    SERVICE_PROC    f_proc;      /* service callback func */
+    SERVICE_INIT    f_init;      /* service init func */
     T_TOGGLE        b_used;      /* is used */
 }TENO_SERVICE;
 
 
 /* varialbe declare */
 extern TENO_SERVICE g_s_service[TENO_SERVICE_BUTT];
-
-
 
 /* function declare */
 extern T_VOID* teno_service_proc(T_VOID *p_param);

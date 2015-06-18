@@ -5,6 +5,7 @@
 #include "teno_service.h"
 #include "teno_monitor.h"
 #include "teno_msg.h"
+#include "teno_cli.h"
 
 F_RET teno_init()
 {
@@ -15,5 +16,7 @@ F_RET teno_init()
     teno_mq_init_global_queue();
     /* 初始化monitor线程 */
     teno_monitor_init();
+    /* 初始化cli线程 */
+    teno_cli_init();
     return T_OK;
 }
