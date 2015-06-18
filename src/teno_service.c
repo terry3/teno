@@ -30,24 +30,28 @@ F_RET teno_service_init_service
 
 T_VOID* teno_service_proc(T_VOID *p_param)
 {
-    T_UINT32       ul_sid = 0;
-    TENO_SERVICE  *ps_service = T_NULL;
-    T_MSG_NODE    *ps_node    = T_NULL;
+    T_UINT32      ul_sid        = 0;
+    TENO_SERVICE *ps_service    = T_NULL;
+    T_MSG        *ps_node       = T_NULL;
+    T_MSG_QUEUE  *ps_msg_queue  = T_NULL; /* msg queue */
     PN_RET(p_param, T_NULL);
     ul_sid = *(T_UINT32*)p_param;
     CHK_RET(ul_sid < TENO_SERVICE_BUTT, T_NULL);
     ps_service = &(g_s_service[ul_sid]);
+    ps_msg_queue = &(ps_service->s_msg_queue);
     for (;;)
     {
-        ps_node = teno_mq_pop_queue(&(ps_service->s_msg_queue));
+        ps_node = (T_MSG*)teno_mq_pop_queue(ps_msg_queue);
         if (!ps_node)
         {
             continue;
         }
         if (ps_service->f_proc)
         {
-            ps_service->f_proc((T_VOID*)ps_node);
+            ps_service->f_proc(ps_node);
         }
+        /* 释放ps_node的内存 */
+        teno_msg_free_msg(ps_node);
     }
     return T_OK;
 }

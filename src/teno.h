@@ -5,5 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "pthread.h"
+#include "teno_pub.h"
+
+/* function declare */
+extern F_RET teno_init();
 
 #endif /* TENO_H */

@@ -70,7 +70,7 @@ F_RET teno_mq_push_queue
 	PN_RET(ps_node, T_ERR);
     ps_node->ps_next   = T_NULL;
     ps_node->p_data    = p_data; /* 初始化node，赋值data */
-    ps_node->ul_length = 0;
+    ps_node->ul_length = 0;      /* 暂时初始化为0 */
     T_LOCK(ps_queue->s_mutex);
     ps_tail = ps_queue->ps_tail;
     if (T_NULL == ps_tail)
@@ -101,7 +101,7 @@ T_VOID* teno_mq_pop_queue
 	PN_RET(ps_queue, T_NULL);
     T_LOCK(ps_queue->s_mutex);
     if (!(ps_queue->ps_head))
-    {    
+    {
         T_UNLOCK(ps_queue->s_mutex);
         return T_NULL;
     }
