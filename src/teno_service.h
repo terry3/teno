@@ -9,6 +9,8 @@ typedef enum _teno_service_type
 {
     TENO_SERVICE_MONITOR = 0,
     TENO_SERVICE_TIMER,
+    TENO_SERVICE_JUST_PRINT,
+    TENO_SERVICE_CLI,
 
     TENO_DO_NOT_MODIFY_UP,
     TENO_SERVICE_BUTT,

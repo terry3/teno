@@ -14,7 +14,7 @@ T_VOID* teno_monitor_proc(T_VOID *p_param)
     T_MSG_QUEUE *ps_queue = T_NULL;
     for (;;)
     {
-        ps_msg = teno_mq_pop_queue(&g_s_queue);
+        ps_msg = (T_MSG*)teno_mq_pop_queue(&g_s_queue);
         if (!ps_msg)
         {
             continue;

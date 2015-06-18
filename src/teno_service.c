@@ -1,5 +1,4 @@
-/* teno_service.c teno中service的处理函数 */
-#include "teno.h"
+﻿#include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
@@ -32,7 +31,7 @@ T_VOID* teno_service_proc(T_VOID *p_param)
 {
     T_UINT32      ul_sid        = 0;
     TENO_SERVICE *ps_service    = T_NULL;
-    T_MSG        *ps_node       = T_NULL;
+    T_MSG        *ps_msg        = T_NULL;
     T_MSG_QUEUE  *ps_msg_queue  = T_NULL; /* msg queue */
     PN_RET(p_param, T_NULL);
     ul_sid = *(T_UINT32*)p_param;
@@ -41,19 +40,15 @@ T_VOID* teno_service_proc(T_VOID *p_param)
     ps_msg_queue = &(ps_service->s_msg_queue);
     for (;;)
     {
-        ps_node = (T_MSG*)teno_mq_pop_queue(ps_msg_queue);
-        if (!ps_node)
-        {
-            continue;
-        }
+        ps_msg = (T_MSG*)teno_mq_pop_queue(ps_msg_queue);
+
         if (ps_service->f_proc)
         {
-            ps_service->f_proc(ps_node);
+            /* 钩子中不用关心 ps_node 这块内存 */
+            ps_service->f_proc(ps_msg);
         }
         /* 释放ps_node的内存 */
-        teno_msg_free_msg(ps_node);
+        teno_msg_free_msg(ps_msg);
     }
     return T_OK;
 }
-
-

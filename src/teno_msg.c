@@ -24,6 +24,7 @@ T_VOID teno_msg_free_msg(T_MSG *ps_msg)
 
 F_RET teno_msg_send(T_MSG *ps_msg)
 {
+    /* printf("send msg\n"); */
     teno_mq_push_queue(&g_s_queue, ps_msg);
     return T_OK;
 }

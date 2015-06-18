@@ -1,12 +1,10 @@
-/* teno.c 包含teno主要实现及对外接口函数 */
+﻿/* teno.c 包含teno主要实现及对外接口函数 */
 #include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
 #include "teno_monitor.h"
 #include "teno_msg.h"
-
-
 
 F_RET teno_init()
 {

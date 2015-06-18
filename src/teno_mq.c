@@ -1,4 +1,4 @@
-/* teno_mq.c teno的消息队列处理文件 */
+﻿/* teno_mq.c teno的消息队列处理文件 */
 #include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
@@ -23,6 +23,9 @@ F_RET teno_mq_init_queue
 	ps_queue->ul_size = 0;
 	ul_ret = T_F_MUTEX_INIT(&(ps_queue->s_mutex),
                             T_NULL); /* use default config */
+	FR_RET(ul_ret);
+    ul_ret = T_F_COND_INIT(&(ps_queue->s_cond),
+                           T_NULL); /* use default config */
 	FR_RET(ul_ret);
 	return T_OK;
 }
@@ -85,6 +88,7 @@ F_RET teno_mq_push_queue
         ps_queue->ps_tail = ps_node;
         ps_queue->ul_size++;
     }
+    T_F_SINGAL(&(ps_queue->s_cond));    /* 解除等待线程的阻塞 */
     T_UNLOCK(ps_queue->s_mutex);
     return T_OK;
 }
@@ -100,10 +104,11 @@ T_VOID* teno_mq_pop_queue
 
 	PN_RET(ps_queue, T_NULL);
     T_LOCK(ps_queue->s_mutex);
-    if (!(ps_queue->ps_head))
+    while (!(ps_queue->ps_head))
     {
-        T_UNLOCK(ps_queue->s_mutex);
-        return T_NULL;
+        /* 队列为空时阻塞在这里 */
+        pthread_cond_wait(&(ps_queue->s_cond),
+                          &(ps_queue->s_mutex));
     }
 
     ps_head           = ps_queue->ps_head;
@@ -113,11 +118,9 @@ T_VOID* teno_mq_pop_queue
     ps_queue->ul_size--;
     if (0 == ps_queue->ul_size)
     {
-        ps_queue->ps_head = T_NULL;
         ps_queue->ps_tail = T_NULL;
     }
     T_UNLOCK(ps_queue->s_mutex);
     T_SAFE_FREE(ps_head);
-
-    return p_data;
+    return p_data;    /* 由service_proc释放 */
 }
