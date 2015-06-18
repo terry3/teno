@@ -55,6 +55,14 @@ typedef unsigned char  T_TOGGLE;
         return (_ret);                          \
     }
 
+#define CHK_RET(_p, _ret)                       \
+    if (!(_p))                                  \
+    {                                           \
+  printf("[%s]:[%s]:(%d): " #_p " check failure.\n", \
+  __FILE__, __FUNCTION__, __LINE__);            \
+        return (_ret);                          \
+    }
+
 #define F_NCHK_RET(_t, _d, _ret)                \
     if ((_d) != (_t))                           \
     {                                           \
@@ -77,12 +85,27 @@ typedef unsigned char  T_TOGGLE;
         return (_ret);                          \
     }
 
+#define FR_RET_N(_ret)                            \
+    if (T_OK != (_ret))                         \
+    {                                           \
+  printf("[%s]:[%s]:(%d):return not T_OK.\n",      \
+  __FILE__, __FUNCTION__, __LINE__);            \
+        return;                          \
+    }
+
 #define FR_BRK(_ret)                            \
     if (T_OK != (_ret))                         \
     {                                           \
   printf("[%s]:[%s]:(%d):Null pointer.\n",      \
   __FILE__, __FUNCTION__, __LINE__);            \
         break;                                  \
+    }
+
+#define T_SAFE_FREE(_ptr) \
+    if ((_ptr))                                 \
+    {                                           \
+        free((_ptr));                           \
+        (_ptr) = T_NULL;                        \
     }
 
 #endif /* TENO_PUB_H */
