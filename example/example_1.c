@@ -7,12 +7,12 @@
 #include <windows.h>
 #include <time.h>
 
-#define MAX_CNT (10000 * 100)
+#define MAX_CNT (10000 * 100 * 5)
 DWORD dwStart;
 DWORD dwEnd;
 static T_UINT32 stat = 0;
 
-#define T_ENABLE_CLI
+
 #ifdef T_ENABLE_CLI
 #define CLI_TOGGLE 1
 #else
@@ -33,17 +33,17 @@ F_RET test_proc(T_MSG *ps_msg)
     return T_OK;
 }
 
-T_VOID* test_cli_client(T_VOID *p_param)
+T_VOID* test_cli(T_VOID *p_param)
 {
-    T_CHAR buffer[1024] = "";
     T_MSG *ps_msg = T_NULL;
+    T_CHAR buffer[1024] = "";
 
     while (1)
     {
         memset(buffer, 0, sizeof(buffer));
         fgets(buffer, 1023, stdin);
         ps_msg = teno_msg_alloc_msg(100 + 1);
-        PN_RET(ps_msg, T_NULL);
+        PN_RET(ps_msg, 0);
         ps_msg->ul_to_sid = TENO_SERVICE_CLI;
         ps_msg->ul_type = TENO_MSG_QUERY_SERVICE_STATE;
         strcpy(ps_msg->data, buffer);
@@ -79,9 +79,11 @@ int main(int argc, char *argv[])
     dwStart = GetTickCount();
     stat = 0;
 
+    /* 创建service线程 */
     (T_VOID)T_THREAD_CREATE(s_tid,
-                            test_cli_client,
+                            test_cli,
                             index);
+
 
     for (index =0 ; index < MAX_CNT; index++)
     {
@@ -91,6 +93,7 @@ int main(int argc, char *argv[])
         sprintf(ps_msg->data, "%d\0", index);
         teno_msg_send(ps_msg);
     }
+
 
     pthread_join(g_s_service[TENO_SERVICE_CLI].s_tid, T_NULL);
 
