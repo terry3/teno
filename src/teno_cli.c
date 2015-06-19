@@ -5,7 +5,7 @@
 #include "teno_monitor.h"
 #include "teno_cli.h"
 
-F_RET teno_cli_query_service_state()
+F_RET teno_cli_exec_cmd()
 {
     F_RET       ul_ret    = T_OK;
     T_UINT32    ul_index  = 0;
@@ -38,7 +38,7 @@ F_RET teno_cli_proc(T_MSG *ps_msg)
     switch (ps_msg->ul_type)
     {
     case TENO_MSG_QUERY_SERVICE_STATE:
-        teno_cli_query_service_state();
+        teno_cli_exec_cmd();
         break;
     default:
         break;
@@ -52,6 +52,7 @@ F_RET teno_cli_init()
     F_RET ul_ret = NULL_UINT32;
     /* service command line interface */
     ul_ret = teno_service_init_service(TENO_SERVICE_CLI,
-                                       teno_cli_proc);
+                                       teno_cli_proc,
+                                       T_NULL); /* 没有初始化函�?*/
     return T_OK;
 }

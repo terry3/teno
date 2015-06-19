@@ -45,7 +45,7 @@ T_VOID* test_cli(T_VOID *p_param)
         ps_msg = teno_msg_alloc_msg(100 + 1);
         PN_RET(ps_msg, 0);
         ps_msg->ul_to_sid = TENO_SERVICE_CLI;
-        ps_msg->ul_type = TENO_MSG_QUERY_SERVICE_STATE;
+        ps_msg->ul_type = TENO_MSG_CLI_CMD;
         strcpy(ps_msg->data, buffer);
         ps_msg->data[strlen(ps_msg->data) - 1] = '\0';
         dwStart = GetTickCount();
@@ -63,7 +63,9 @@ int main(int argc, char *argv[])
     T_THREAD_T      s_tid;      /* service thread id */
 
     teno_init();
-    teno_service_init_service(TENO_SERVICE_JUST_PRINT, test_proc);
+    teno_service_init_service(TENO_SERVICE_JUST_PRINT,
+                              test_proc,
+                              T_NULL);
 
     dwStart = GetTickCount();
     stat = 0;

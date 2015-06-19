@@ -1,4 +1,4 @@
-﻿#include "teno.h"
+#include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
@@ -8,7 +8,8 @@ TENO_SERVICE g_s_service[TENO_SERVICE_BUTT];
 F_RET teno_service_init_service
 (
     T_UINT32      ul_sid,
-    SERVICE_PROC  f_proc
+    SERVICE_PROC  f_proc,
+    SERVICE_INIT  f_init       /* service init func */
 )
 {
     F_RET  ul_ret = 0;
@@ -24,6 +25,7 @@ F_RET teno_service_init_service
     ul_ret = teno_mq_init_queue(&(g_s_service[ul_sid].s_msg_queue));
     g_s_service[ul_sid].f_proc = f_proc;
     g_s_service[ul_sid].b_used = T_TRUE;
+    g_s_service[ul_sid].f_init = f_init;
     return T_OK;
 }
 
@@ -38,6 +40,11 @@ T_VOID* teno_service_proc(T_VOID *p_param)
     CHK_RET(ul_sid < TENO_SERVICE_BUTT, T_NULL);
     ps_service = &(g_s_service[ul_sid]);
     ps_msg_queue = &(ps_service->s_msg_queue);
+    /* Service的初始化函数 */
+    if (ps_service->f_init)
+    {
+        ps_service->f_init();
+    }
     for (;;)
     {
         /* 阻塞pop */
