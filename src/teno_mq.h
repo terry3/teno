@@ -13,6 +13,7 @@ typedef struct _t_msg_node T_MSG_NODE;
 #define T_F_DESTROY_MUTEX pthread_mutex_destroy
 #define T_F_THREAD_CREATE pthread_create
 #define T_F_SINGAL        pthread_cond_signal
+#define T_MEMP            
 
 #define T_LOCK(_mutex) \
     T_F_LOCK(&(_mutex))
@@ -34,11 +35,13 @@ struct _t_msg_node
 
 typedef struct
 {
-    T_MSG_NODE *ps_head;
-    T_MSG_NODE *ps_tail;
-    T_UINT32    ul_size;
-    T_MUTEX     s_mutex;
-    T_COND      s_cond;
+    T_MSG_NODE      *ps_head;
+    T_MSG_NODE      *ps_tail;
+    T_UINT32         ul_size;
+    apr_pool_t      *ps_memp;
+    T_MUTEX          s_mutex;
+    T_COND           s_cond;
+    apr_queue_t     *ps_queue;
 }T_MSG_QUEUE;
 
 

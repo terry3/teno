@@ -13,6 +13,8 @@ F_RET teno_init()
     memset(g_s_service, 0, sizeof(g_s_service));
     memset(&g_s_queue, 0, sizeof(g_s_queue));
     /* 初始化全局队列 */
+    apr_initialize();           /* 初始化apr */
+    apr_pool_initialize();      /* 初始化apr_pool */
     teno_mq_init_global_queue();
     /* 初始化monitor线程 */
     teno_monitor_init();

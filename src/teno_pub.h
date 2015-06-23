@@ -5,6 +5,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/* for apr_pool_create and apr_pool_destroy */
+/* functions only used in this file so not exposed */
+#include "apr_pools.h"
+/* for apr_hash_make, apr_hash_pool_get, apr_hash_set */
+/* functions only used in this file so not exposed */
+#include "apr_hash.h"
+/* for apr_pvsprintf */
+/* function only used in this file so not exposed */
+#include "apr_strings.h"
+/* for apr_initialize and apr_terminate */
+/* function only used in this file so not exposed */
+#include "apr_general.h"
+#include "apr_portable.h"
+#include "apr_queue.h"
 
 #define T_OK  0
 #define T_ERR 1
