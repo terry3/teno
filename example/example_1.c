@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <time.h>
 
-#define MAX_CNT (10000 * 100 * 5)
+#define MAX_CNT (10000 * 100)
 DWORD dwStart;
 DWORD dwEnd;
 static T_UINT32 stat = 0;

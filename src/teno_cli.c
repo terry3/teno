@@ -10,7 +10,7 @@ F_RET teno_cli_cmd_query_service_state()
     F_RET       ul_ret    = T_OK;
     T_UINT32    ul_index  = 0;
 
-    printf("GLOBAL_MSG_QUEUE_SIZE:d]\n", g_s_queue.ul_size);
+    printf("GLOBAL_MSG_QUEUE_SIZE:[%d]\n", g_s_queue.ul_size);
 
 
     for (ul_index = 0;
@@ -23,7 +23,7 @@ F_RET teno_cli_cmd_query_service_state()
         }
 
         printf("SERVICE_ID:[%d]\n", ul_index);
-        printf("SERVICE_MSG_QUEUE_SIZE:d]\n",
+        printf("SERVICE_MSG_QUEUE_SIZE:[%d]\n",
                g_s_service[ul_index].s_msg_queue.ul_size);
     }
 
