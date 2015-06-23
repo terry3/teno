@@ -5,12 +5,12 @@
 #include "teno_monitor.h"
 #include "teno_cli.h"
 
-F_RET teno_cli_exec_cmd()
+F_RET teno_cli_cmd_query_service_state()
 {
     F_RET       ul_ret    = T_OK;
     T_UINT32    ul_index  = 0;
 
-    printf("GLOBAL_MSG_QUEUE_SIZE:[%d]\n", g_s_queue.ul_size);
+    printf("GLOBAL_MSG_QUEUE_SIZE:d]\n", g_s_queue.ul_size);
 
 
     for (ul_index = 0;
@@ -23,11 +23,29 @@ F_RET teno_cli_exec_cmd()
         }
 
         printf("SERVICE_ID:[%d]\n", ul_index);
-        printf("SERVICE_MSG_QUEUE_SIZE:[%d]\n",
+        printf("SERVICE_MSG_QUEUE_SIZE:d]\n",
                g_s_service[ul_index].s_msg_queue.ul_size);
     }
 
     return ul_ret;
+}
+
+F_RET teno_cli_exec_cmd
+(
+    T_CHAR *pc_cmd
+)
+{
+    PN_RET(pc_cmd, T_ERR);
+    /* */
+    if (!strcmp("exit", pc_cmd))
+    {
+        exit(0);
+    }
+    else
+    {
+        teno_cli_cmd_query_service_state();
+    }
+    return T_OK;
 }
 
 F_RET teno_cli_proc(T_MSG *ps_msg)
@@ -37,8 +55,8 @@ F_RET teno_cli_proc(T_MSG *ps_msg)
 
     switch (ps_msg->ul_type)
     {
-    case TENO_MSG_QUERY_SERVICE_STATE:
-        teno_cli_exec_cmd();
+    case TENO_MSG_CLI_CMD:
+        teno_cli_exec_cmd((T_CHAR*)(ps_msg->data));
         break;
     default:
         break;
@@ -53,6 +71,6 @@ F_RET teno_cli_init()
     /* service command line interface */
     ul_ret = teno_service_init_service(TENO_SERVICE_CLI,
                                        teno_cli_proc,
-                                       T_NULL); /* 没有初始化函�?*/
+                                       T_NULL);
     return T_OK;
 }
