@@ -12,7 +12,6 @@ F_RET teno_cli_cmd_query_service_state()
 
     printf("GLOBAL_MSG_QUEUE_SIZE:[%d]\n", g_s_queue.ul_size);
 
-
     for (ul_index = 0;
          ul_index < TENO_SERVICE_BUTT;
          ul_index++)
@@ -72,5 +71,6 @@ F_RET teno_cli_init()
     ul_ret = teno_service_init_service(TENO_SERVICE_CLI,
                                        teno_cli_proc,
                                        T_NULL);
+
     return T_OK;
 }
