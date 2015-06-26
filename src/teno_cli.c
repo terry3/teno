@@ -14,10 +14,8 @@ F_RET teno_cli_cmd_query_service_state()
 
     for (ul_index = 0;
          ul_index < TENO_SERVICE_BUTT;
-         ul_index++)
-    {
-        if (!g_s_service[ul_index].b_used)
-        {
+         ul_index++) {
+        if (!g_s_service[ul_index].b_used) {
             continue;
         }
 
@@ -36,12 +34,9 @@ F_RET teno_cli_exec_cmd
 {
     PN_RET(pc_cmd, T_ERR);
     /* */
-    if (!strcmp("exit", pc_cmd))
-    {
+    if (!strcmp("exit", pc_cmd)) {
         exit(0);
-    }
-    else
-    {
+    } else {
         teno_cli_cmd_query_service_state();
     }
     return T_OK;
@@ -52,8 +47,7 @@ F_RET teno_cli_proc(T_MSG *ps_msg)
     F_RET ul_ret = T_OK;
     PN_RET(ps_msg, T_ERR);
 
-    switch (ps_msg->ul_type)
-    {
+    switch (ps_msg->ul_type) {
     case TENO_MSG_CLI_CMD:
         teno_cli_exec_cmd((T_CHAR*)(ps_msg->data));
         break;

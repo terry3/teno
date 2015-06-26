@@ -41,17 +41,14 @@ T_VOID* teno_service_proc(T_VOID *p_param)
     ps_service = &(g_s_service[ul_sid]);
     ps_msg_queue = &(ps_service->s_msg_queue);
     /* Service的初始化函数 */
-    if (ps_service->f_init)
-    {
+    if (ps_service->f_init) {
         ps_service->f_init();
     }
-    for (;;)
-    {
+    for (;;) {
         /* 阻塞pop */
         ps_msg = (T_MSG*)teno_mq_pop_queue(ps_msg_queue);
 
-        if (ps_service->f_proc)
-        {
+        if (ps_service->f_proc) {
             /* 钩子中不用关心 ps_node 这块内存 */
             ps_service->f_proc(ps_msg);
         }
