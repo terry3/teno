@@ -8,10 +8,11 @@
 
 T_VOID* teno_monitor_proc(T_VOID *p_param)
 {
-    T_MSG_NODE  *ps_node  = T_NULL;
     T_MSG       *ps_msg   = T_NULL;
     F_RET        ul_ret   = NULL_UINT32;
     T_MSG_QUEUE *ps_queue = T_NULL;
+
+    F_UNUSED(p_param);
     for (;;) {
         ps_msg = (T_MSG*)teno_mq_pop_queue(&g_s_queue);
         if (!ps_msg) {
@@ -24,8 +25,6 @@ T_VOID* teno_monitor_proc(T_VOID *p_param)
             printf("push queue failure. sid[%d]", ps_msg->ul_to_sid);
         }
     }
-
-    return T_OK;
 }
 
 F_RET teno_monitor_init()

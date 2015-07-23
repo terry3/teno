@@ -7,16 +7,15 @@
 #include "teno_msg.h"
 #include "teno_cli.h"
 
-F_RET teno_init()
-{
-    /* 全局变量清0 */
-    memset(g_s_service, 0, sizeof(g_s_service));
-    memset(&g_s_queue, 0, sizeof(g_s_queue));
-    /* 初始化全局队列 */
+F_RET teno_init() {
+    /* clear variable to 0 */
+    F_BZERO(g_s_service, sizeof(g_s_service));
+    F_BZERO(&g_s_queue, sizeof(g_s_queue));
+    /* init global message queue */
     teno_mq_init_global_queue();
-    /* 初始化monitor线程 */
+    /* create monitor thread */
     teno_monitor_init();
-    /* 初始化cli线程 */
+    /* a built-in service in teno */
     teno_cli_init();
     return T_OK;
 }

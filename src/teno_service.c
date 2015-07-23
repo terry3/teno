@@ -55,5 +55,4 @@ T_VOID* teno_service_proc(T_VOID *p_param)
         /* 释放ps_node的内存 */
         teno_msg_free_msg(ps_msg);
     }
-    return T_OK;
 }

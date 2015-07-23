@@ -21,8 +21,8 @@ typedef enum E_F_RET_TYPE
 }F_RET_TYPE;
 
 /* data type */
-#define T_NULL         NULL
-#define T_VOID         void
+#define T_NULL NULL
+#define T_VOID void
 typedef unsigned int   T_UINT32;
 typedef int            T_INT32;
 typedef unsigned short T_UINT16;
@@ -37,14 +37,30 @@ typedef unsigned char  T_TOGGLE;
 #define NULL_UINT16 0xFFFF
 #define NULL_UINT8  0xFF
 
+#define TENO_STR_TERM '\0'
+
+/* teno string define */
+typedef struct _teno_str
+{
+    T_CHAR   *str;              /* str do not have '\0' at last position */
+    T_UINT32  len;
+}TENO_STR;
+
 /* return if p is null */
 #define PN_RET_N(p)                             \
-    if (!(p))                          \
+    if (!(p))                                   \
     {                                           \
   printf("[%s]:[%s]:(%d):Null pointer.\n",      \
   __FILE__, __FUNCTION__, __LINE__);            \
         return;                                 \
     }
+
+#define PN_BRK(p)                               \
+    if (!(p))                                   \
+    {                                           \
+        break;                                  \
+    }
+
 
 /* return ret if p is null */
 #define PN_RET(_p, _ret)                        \
@@ -85,12 +101,12 @@ typedef unsigned char  T_TOGGLE;
         return (_ret);                          \
     }
 
-#define FR_RET_N(_ret)                            \
+#define FR_RET_N(_ret)                          \
     if (T_OK != (_ret))                         \
     {                                           \
-  printf("[%s]:[%s]:(%d):return not T_OK.\n",      \
+  printf("[%s]:[%s]:(%d):return not T_OK.\n",   \
   __FILE__, __FUNCTION__, __LINE__);            \
-        return;                          \
+        return;                                 \
     }
 
 #define FR_BRK(_ret)                            \
@@ -107,5 +123,13 @@ typedef unsigned char  T_TOGGLE;
         free((_ptr));                           \
         (_ptr) = T_NULL;                        \
     }
+
+#define F_BZERO(_ptr, _len)                     \
+    memset((_ptr), 0, (_len));
+
+#define F_UNUSED(_var) \
+    (T_VOID)(_var)
+
+
 
 #endif /* TENO_PUB_H */

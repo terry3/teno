@@ -48,7 +48,7 @@ T_VOID* test_cli(T_VOID *p_param)
         ps_msg->ul_type = TENO_MSG_CLI_CMD;
         strcpy(ps_msg->data, buffer);
         ps_msg->data[strlen(ps_msg->data) - 1] = '\0';
-        dwStart = GetTickCount();
+        /* dwStart = GetTickCount(); */
         teno_msg_send(ps_msg);
     }
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         ps_msg = teno_msg_alloc_msg(100 + 1);
         PN_RET(ps_msg, 0);
         ps_msg->ul_to_sid = TENO_SERVICE_JUST_PRINT;
-        sprintf(ps_msg->data, "%d\0", index);
+        sprintf(ps_msg->data, "123123 123 123 %d\0", index);
         teno_msg_send(ps_msg);
     }
 

@@ -1,3 +1,4 @@
+.obj
 msvs
 design
 /.gitignore
@@ -20,3 +21,12 @@ teno.PRI
 /src/stl
 /test
 /var.mk
+/dep
+/src/cscope.po.out
+/src/cscope.in.out
+/src/cscope.out
+/cscope.in.out
+/cscope.out
+/cscope.po.out
+/teno.SearchResults
+/teno.WK3
