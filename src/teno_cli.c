@@ -29,12 +29,12 @@ T_VOID teno_cli_print_cmd(TENO_CMD *ps_cmd) {
     strncpy(ac_tmp, ps_cmd->s_cmd.str, ps_cmd->s_cmd.len);
     printf("command name:[%s], args:[%d]\n", ac_tmp, ps_cmd->ul_args_size);
     for (ul_index; ul_index < ps_cmd->ul_args_size; ul_index++) {
+        F_BZERO(ac_tmp, sizeof(ac_tmp));
         strncpy(ac_tmp,
                 ps_cmd->as_args[ul_index].str,
                 ps_cmd->as_args[ul_index].len);
         printf("args [%d] value:[%s]\n", ul_index, ac_tmp);
     }
-
     return;
 }
 
@@ -68,6 +68,7 @@ TENO_CMD_HANDLE as_cmd_handler[] =
     /* name   handler */
     {"exit" , teno_cli_cmd_exit},
     {"state", teno_cli_cmd_display_service_state},
+    // TODO: Add some new command to set/get variable in teno
 };
 
 /* execute command */
@@ -114,6 +115,7 @@ F_RET teno_cli_proc(T_MSG *ps_msg) {
     PN_RET(ps_msg, T_ERR);
 
     switch (ps_msg->ul_type) {
+        /* cli message type handle */
     case TENO_MSG_CLI_CMD:
         teno_cli_exec_cmd((T_CHAR*)(ps_msg->data));
         break;
@@ -131,5 +133,5 @@ F_RET teno_cli_init() {
     ul_ret = teno_service_init_service(TENO_SERVICE_CLI,
                                        teno_cli_proc,
                                        T_NULL);
-    return T_OK;
+    return ul_ret;
 }

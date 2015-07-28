@@ -29,6 +29,7 @@ F_RET teno_service_init_service
     return T_OK;
 }
 
+/* service process framwork, invoke f_init() and f_proc() */
 T_VOID* teno_service_proc(T_VOID *p_param)
 {
     T_UINT32      ul_sid        = 0;
