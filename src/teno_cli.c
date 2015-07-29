@@ -28,7 +28,7 @@ T_VOID teno_cli_print_cmd(TENO_CMD *ps_cmd) {
 
     strncpy(ac_tmp, ps_cmd->s_cmd.str, ps_cmd->s_cmd.len);
     printf("command name:[%s], args:[%d]\n", ac_tmp, ps_cmd->ul_args_size);
-    for (ul_index; ul_index < ps_cmd->ul_args_size; ul_index++) {
+    for (ul_index = 0; ul_index < ps_cmd->ul_args_size; ul_index++) {
         F_BZERO(ac_tmp, sizeof(ac_tmp));
         strncpy(ac_tmp,
                 ps_cmd->as_args[ul_index].str,

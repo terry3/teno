@@ -2,6 +2,7 @@
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
+#include "teno_trace.h"
 
 TENO_SERVICE g_s_service[TENO_SERVICE_BUTT];
 
@@ -13,7 +14,7 @@ F_RET teno_service_init_service
 )
 {
     F_RET  ul_ret = 0;
-
+    F_UNUSED(ul_ret);
     CHK_RET(ul_sid < TENO_SERVICE_BUTT, T_ERR);
     CHK_RET(T_TRUE != g_s_service[ul_sid].b_used, T_ERR);
 

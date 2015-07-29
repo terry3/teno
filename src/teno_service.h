@@ -9,10 +9,10 @@ typedef F_RET (*SERVICE_INIT)(); /* Service初始化函数原型 */
 typedef enum _teno_service_type
 {
     TENO_SERVICE_MONITOR = 0,
-    TENO_SERVICE_TIMER,         /* TODO: timer */
-    TENO_SERVICE_JUST_PRINT,    /* just print */
+    TENO_SERVICE_TIMER,         /* TODO */
     TENO_SERVICE_CLI,           /* command line interface */
     TENO_SERVICE_SCI,           /* socket command interface */
+    TENO_SERVICE_TEST,          /* TEST service */
 
     TENO_DO_NOT_MODIFY_UP,
     TENO_SERVICE_BUTT,
