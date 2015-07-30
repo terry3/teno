@@ -4,6 +4,7 @@
 #include "teno_mq.h"
 #include "teno_msg.h"
 
+/* alloc teno message, failure return NULL */
 T_MSG* teno_msg_alloc_msg(T_UINT32 ul_length)
 {
     T_MSG *ps_msg = T_NULL;
@@ -15,6 +16,7 @@ T_MSG* teno_msg_alloc_msg(T_UINT32 ul_length)
     return ps_msg;
 }
 
+/* free teno message */
 T_VOID teno_msg_free_msg(T_MSG *ps_msg)
 {
     PN_RET_N(ps_msg);
@@ -22,6 +24,7 @@ T_VOID teno_msg_free_msg(T_MSG *ps_msg)
     return;
 }
 
+/* send teno message, just push the message to que global queue */
 F_RET teno_msg_send(T_MSG *ps_msg)
 {
     /* printf("send msg\n"); */
