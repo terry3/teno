@@ -9,7 +9,7 @@ T_MSG* teno_msg_alloc_msg(T_UINT32 ul_length)
     T_MSG *ps_msg = T_NULL;
 
     ps_msg = (T_MSG*)malloc(sizeof(*ps_msg) + ul_length);
-
+    PN_RET(ps_msg, T_NULL);
     memset(ps_msg, 0, sizeof(*ps_msg) + ul_length);
 
     return ps_msg;
