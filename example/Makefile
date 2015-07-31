@@ -13,7 +13,7 @@ $(OBJS):%.o:%.c ../src/$(PUB_HDR)
 $(EXP):$(OBJS) $(DEPS)
 	cd ../src/ && make
 	$(CC) -o $@ example_1.o -lteno -lpthread -L../
-	ln -s ../libteno.so ./libteno.so
+	cp -p ../libteno.so /usr/lib/
 .PHONY : clean
 clean :
 	-rm  $(OBJS)

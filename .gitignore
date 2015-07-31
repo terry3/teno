@@ -1,9 +1,11 @@
 .obj
 msvs
-.o
+*.o
+./src/*.o
+./example/*.o
 design
 libteno.so
-teno_exp_1
+./example/teno_exp_1
 /.gitignore
 pthreads
 teno.PS
