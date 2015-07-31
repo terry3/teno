@@ -14,7 +14,11 @@ F_RET teno_service_init_service
 )
 {
     F_RET  ul_ret = 0;
+<<<<<<< HEAD
     F_UNUSED(ul_ret);
+=======
+    F_UNUSED(ul_ret);
+>>>>>>> f7e919cd6cd80271e7cba7cddcf079203eb032b1
     CHK_RET(ul_sid < TENO_SERVICE_BUTT, T_ERR);
     CHK_RET(T_TRUE != g_s_service[ul_sid].b_used, T_ERR);
 
