@@ -1,6 +1,9 @@
 .obj
 msvs
+.o
 design
+libteno.so
+teno_exp_1
 /.gitignore
 pthreads
 teno.PS
