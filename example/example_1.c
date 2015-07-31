@@ -4,12 +4,8 @@
 #include "teno_service.h"
 #include "teno_monitor.h"
 #include "teno_msg.h"
-#include <windows.h>
-#include <time.h>
 
 #define MAX_CNT (10000 * 100)
-DWORD dwStart;
-DWORD dwEnd;
 static T_UINT32 stat = 0;
 
 
@@ -27,8 +23,7 @@ F_RET test_proc(T_MSG *ps_msg)
 
     if (stat == MAX_CNT)
     {
-        dwEnd = GetTickCount();
-        printf("run time [%d]\n", dwEnd - dwStart);
+        /* printf("run time [%d]\n", dwEnd - dwStart); */
     }
     return T_OK;
 }
@@ -58,30 +53,27 @@ T_VOID* test_cli(T_VOID *p_param)
 int main(int argc, char *argv[])
 {
     T_MSG *ps_msg = T_NULL;
-    T_CHAR a[10] = "1234";
     T_UINT32 index = 0;
     T_THREAD_T      s_tid;      /* service thread id */
 
     teno_init();
-    teno_service_init_service(TENO_SERVICE_JUST_PRINT,
+    teno_service_init_service(TENO_SERVICE_TEST,
                               test_proc,
                               T_NULL);
 
-    dwStart = GetTickCount();
     stat = 0;
     ps_msg = teno_msg_alloc_msg(100 + 1);
 
     for (index =0 ; index < MAX_CNT; index++)
     {
         ps_msg->ul_to_sid = 1;
-        sprintf(ps_msg->data, "%d\0", index);
+        sprintf(ps_msg->data, "%d", index);
         test_proc(ps_msg);
     }
 
-    dwStart = GetTickCount();
     stat = 0;
 
-    /* 创建service线程 */
+    /* create service thread */
     (T_VOID)T_THREAD_CREATE(s_tid,
                             test_cli,
                             index);
@@ -91,8 +83,8 @@ int main(int argc, char *argv[])
     {
         ps_msg = teno_msg_alloc_msg(100 + 1);
         PN_RET(ps_msg, 0);
-        ps_msg->ul_to_sid = TENO_SERVICE_JUST_PRINT;
-        sprintf(ps_msg->data, "123123 123 123 %d\0", index);
+        ps_msg->ul_to_sid = TENO_SERVICE_TEST;
+        sprintf(ps_msg->data, "123123 123 123 %d", index);
         teno_msg_send(ps_msg);
     }
 

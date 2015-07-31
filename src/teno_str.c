@@ -90,7 +90,7 @@ F_RET teno_str_split_cmd(T_CHAR *pc_cmd, TENO_CMD *ps_cmd) {
 
     pc_cmd_tmp = pc_cmd;
     ul_str_len = strlen(pc_cmd);
-
+    F_UNUSED(ul_str_len);
     /* split the pc_cmd according blank' ' */
     /* between first non-blank to first blank is the cmd name */
     /* get the cmd name, first str in th pc_cmd */
