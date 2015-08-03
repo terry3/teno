@@ -6,8 +6,8 @@
 #include "teno_cli.h"
 #include "teno_trace.h"
 
-/* trace the message */
-/* just print now, will modified to enhanced. */
+/* Trace the message */
+/* Just print now, will modified to enhanced. */
 T_VOID teno_msg_trace(T_MSG *ps_msg) {
     PN_RET_N(ps_msg);
     printf("fs=[%d], ts=[%d], fp=[%d], tp=[%d], T=[%d], L=[%d]\n",

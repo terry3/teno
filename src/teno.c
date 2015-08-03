@@ -8,14 +8,14 @@
 #include "teno_cli.h"
 
 F_RET teno_init() {
-    /* clear variable to 0 */
+    /* Clear variable to 0 */
     F_BZERO(g_s_service, sizeof(g_s_service));
     F_BZERO(&g_s_queue, sizeof(g_s_queue));
-    /* init global message queue */
+    /* Init global message queue */
     teno_mq_init_global_queue();
-    /* create monitor thread */
+    /* Create monitor thread */
     teno_monitor_init();
-    /* a built-in service in teno */
+    /* The built-in service in teno */
     teno_cli_init();
     return T_OK;
 }
