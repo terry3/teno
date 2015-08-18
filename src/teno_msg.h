@@ -18,7 +18,7 @@
 typedef struct
 {
     T_MSG_HEAD
-    T_CHAR   data[0]; /* 内存连续 */
+    T_CHAR   data[0]; /* flex */
 }T_MSG;
 
 

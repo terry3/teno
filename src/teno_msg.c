@@ -1,4 +1,4 @@
-/* teno_msg.c teno中消息的处理函数 */
+/* teno_msg.c */
 #include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"

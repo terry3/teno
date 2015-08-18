@@ -6,7 +6,10 @@
 #include "teno_monitor.h"
 
 
-T_VOID* teno_monitor_proc(T_VOID *p_param)
+T_VOID* teno_monitor_proc
+(
+    T_VOID *p_param
+)
 {
     T_MSG       *ps_msg   = T_NULL;
     F_RET        ul_ret   = NULL_UINT32;
@@ -41,7 +44,7 @@ F_RET teno_monitor_init()
     ul_ret = teno_mq_init_queue(
              &(g_s_service[TENO_SERVICE_MONITOR].s_msg_queue));
     FR_RET(ul_ret);
-    /* 创建monitor service线程 */
+    /* create service thread */
     (T_VOID)T_THREAD_CREATE(g_s_service[TENO_SERVICE_MONITOR].s_tid,
                             teno_monitor_proc,
                             g_s_service[TENO_SERVICE_MONITOR].s_tid);

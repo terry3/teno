@@ -1,10 +1,10 @@
-﻿#include "teno_msg.h"
+#include "teno_msg.h"
 
 #ifndef TENO_SERVICE_H
 #define TENO_SERVICE_H
 
-typedef F_RET (*SERVICE_PROC)(T_MSG* ); /* Service回调函数原型 */
-typedef F_RET (*SERVICE_INIT)(); /* Service初始化函数原型 */
+typedef F_RET (*SERVICE_PROC)(T_MSG* ); /* service handler */
+typedef F_RET (*SERVICE_INIT)(); /* service init */
 
 typedef enum _teno_service_type
 {

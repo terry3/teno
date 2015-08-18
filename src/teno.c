@@ -1,4 +1,4 @@
-﻿/* teno.c 包含teno主要实现及对外接口函数 */
+/* teno.c */
 #include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
