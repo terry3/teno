@@ -15,3 +15,17 @@ test/
 /cscope.out
 /cscope.po.out
 /var.mk
+/dep
+/msvs
+/teno.IAB
+/teno.IAD
+/teno.IMB
+/teno.IMD
+/teno.lib
+/teno.PFI
+/teno.PO
+/teno.PR
+/teno.PRI
+/teno.PS
+/teno.SearchResults
+/teno.WK3
