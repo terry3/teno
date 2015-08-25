@@ -27,7 +27,6 @@ F_RET teno_mq_init_queue
                            TENO_MQ_DEFAULT_SIZE,
                            ps_queue->ps_pool);
     FR_RET(ret);
-
 	return T_OK;
 }
 
