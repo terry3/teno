@@ -98,8 +98,9 @@ F_RET teno_str_split_cmd(T_CHAR *pc_cmd, TENO_CMD *ps_cmd) {
     FR_RET(ul_ret);
     pc_cmd_tmp += ps_cmd->s_cmd.len;
 
-    while(!teno_str_get_str_between(pc_cmd_tmp, ' ', &(ps_cmd->as_args[ul_index]))
-          && ul_index < MAX_CMD_ARGS_SIZE) {
+    while(ul_index < MAX_CMD_ARGS_SIZE
+          && !teno_str_get_str_between
+                  (pc_cmd_tmp, ' ', &(ps_cmd->as_args[ul_index]))) {
         pc_cmd_tmp = ps_cmd->as_args[ul_index].str + ps_cmd->as_args[ul_index].len;
         ul_index++;
         /* increment the args size */
