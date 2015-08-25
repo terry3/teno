@@ -1,6 +1,10 @@
 #ifndef TENO_MQ_H
 #define TENO_MQ_H
 
+#include <apr_queue.h>
+
+#define TENO_MQ_DEFAULT_SIZE    2048
+
 
 typedef struct _t_msg_node T_MSG_NODE;
 #define T_THREAD_T        pthread_t
@@ -34,11 +38,13 @@ struct _t_msg_node
 
 typedef struct
 {
-    T_MSG_NODE *ps_head;
-    T_MSG_NODE *ps_tail;
-    T_UINT32    ul_size;
-    T_MUTEX     s_mutex;
-    T_COND      s_cond;
+    T_MSG_NODE     *ps_head;
+    T_MSG_NODE     *ps_tail;
+    T_UINT32        ul_size;
+    T_MUTEX         s_mutex;
+    T_COND          s_cond;
+    apr_queue_t    *ps_queue;
+    apr_pool_t     *ps_pool;
 }T_MSG_QUEUE;
 
 

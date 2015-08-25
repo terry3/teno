@@ -1,4 +1,5 @@
 /* teno_mq.c  */
+#include <apr_queue.h>
 #include "teno.h"
 #include "teno_pub.h"
 #include "teno_mq.h"
@@ -10,111 +11,58 @@ F_RET teno_mq_init_global_queue()
     return teno_mq_init_queue(&g_s_queue);
 }
 
+/* create apr queue */
 F_RET teno_mq_init_queue
 (
     T_MSG_QUEUE *ps_queue
 )
 {
-	F_RET ul_ret = 0;
+    T_APR_RET   ret    = 0;
 	PN_RET(ps_queue, T_ERR);
+    /* create apr memory pool */
+    ret = apr_pool_create(&(ps_queue->ps_pool), NULL);
+	FR_RET(ret);
+    /* create apr queue */
+    ret = apr_queue_create(&(ps_queue->ps_queue), 
+                           TENO_MQ_DEFAULT_SIZE,
+                           ps_queue->ps_pool);
+    FR_RET(ret);
 
-	ps_queue->ps_head = T_NULL;
-	ps_queue->ps_tail = T_NULL;
-	ps_queue->ul_size = 0;
-	ul_ret = T_F_MUTEX_INIT(&(ps_queue->s_mutex),
-                            T_NULL); /* use default config */
-	FR_RET(ul_ret);
-    ul_ret = T_F_COND_INIT(&(ps_queue->s_cond),
-                           T_NULL); /* use default config */
-	FR_RET(ul_ret);
 	return T_OK;
 }
 
+/* destroy apr queue */
 T_VOID teno_mq_destroy_queue
 (
     T_MSG_QUEUE *ps_queue
 )
 {
-	T_MSG_NODE *ps_node = T_NULL;
-	T_MSG_NODE *ps_next = T_NULL;
-	PN_RET_N(ps_queue);
-
-	T_LOCK(ps_queue->s_mutex);
-
-	ps_node = ps_queue->ps_head;
-	ps_next = ps_node;
-	while(ps_node) {      /* loop the node to free */
-		ps_next = ps_node->ps_next;
-		/* free the message first */
-		T_SAFE_FREE(ps_node->p_data);
-		T_SAFE_FREE(ps_node);
-		ps_node = ps_next;
-	}
-
-	T_UNLOCK(ps_queue->s_mutex);
-	T_DESTORY_MUTEX(&(ps_queue->s_mutex));
-
-	return;
+    (T_VOID)apr_queue_term(ps_queue->ps_queue);
+    (T_VOID)apr_pool_destroy(ps_queue->ps_pool);
 }
 
+/* push teno message to the queue. */
 F_RET teno_mq_push_queue
 (
     T_MSG_QUEUE *ps_queue,
     T_VOID      *p_data
 )
 {
-	T_MSG_NODE *ps_node = T_NULL;
-    T_MSG_NODE *ps_tail = T_NULL;
-	PN_RET(ps_queue, T_ERR);
-	PN_RET(p_data, T_ERR);
-
-	ps_node = (T_MSG_NODE*)malloc(sizeof(*ps_node));
-	PN_RET(ps_node, T_ERR);
-    ps_node->ps_next   = T_NULL;
-    ps_node->p_data    = p_data; /* init node, set to data */
-    ps_node->ul_length = 0;      /* message length */
-    T_LOCK(ps_queue->s_mutex);
-    ps_tail = ps_queue->ps_tail;
-    if (T_NULL == ps_tail) {
-        ps_queue->ps_tail = ps_node;
-        ps_queue->ps_head = ps_node;
-        ps_queue->ul_size++;
-    } else {
-        ps_tail->ps_next = ps_node;
-        ps_queue->ps_tail = ps_node;
-        ps_queue->ul_size++;
-    }
-    T_F_SINGAL(&(ps_queue->s_cond));    /* unblock */
-    T_UNLOCK(ps_queue->s_mutex);
-    return T_OK;
+    return apr_queue_push(ps_queue->ps_queue, p_data);
 }
 
+/* pop teno message from the queue. */
 T_VOID* teno_mq_pop_queue
 (
     T_MSG_QUEUE *ps_queue
 )
 {
-    T_MSG_NODE *ps_node = T_NULL;
-    T_MSG_NODE *ps_head = T_NULL;
-    T_VOID     *p_data  = T_NULL;
-
-	PN_RET(ps_queue, T_NULL);
-    T_LOCK(ps_queue->s_mutex);
-    while (!(ps_queue->ps_head)) {
-        /* block when queue is empty */
-        pthread_cond_wait(&(ps_queue->s_cond),
-                          &(ps_queue->s_mutex));
+    T_VOID     *p_data = T_NULL;
+    T_APR_RET   ret    = 0;
+    ret = apr_queue_pop(ps_queue->ps_queue, &p_data);
+    if (!ret) {
+        return p_data;
     }
 
-    ps_head           = ps_queue->ps_head;
-    ps_node           = ps_head->ps_next;
-    p_data            = ps_head->p_data;
-    ps_queue->ps_head = ps_node;
-    ps_queue->ul_size--;
-    if (0 == ps_queue->ul_size) {
-        ps_queue->ps_tail = T_NULL;
-    }
-    T_UNLOCK(ps_queue->s_mutex);
-    T_SAFE_FREE(ps_head);
-    return p_data;    /* service_proc() free p_data */
+    return T_NULL;    /* service_proc() free p_data */
 }

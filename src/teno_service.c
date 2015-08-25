@@ -2,7 +2,8 @@
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_service.h"
-#include "teno_trace.h"
+
+#include "teno_trace.h"
 
 TENO_SERVICE g_s_service[TENO_SERVICE_BUTT];
 

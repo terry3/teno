@@ -132,4 +132,10 @@ typedef struct _teno_str
 
 
 
+/********** apr define **********/
+#define T_APR_RET apr_status_t
+
+
+
+
 #endif /* TENO_PUB_H */
