@@ -4,6 +4,9 @@
 #define TENO_MSG_H
 
 
+#define TENO_MAX_MSG_SIZE 4096
+
+
 #define T_MSG_HEAD_LEN \
     sizeof(6 * sizeof(T_UINT32))
 

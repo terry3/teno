@@ -1,0 +1,10 @@
+#ifndef TENO_SOCKET_UNIX_H
+#define TENO_SOCKET_UNIX_H
+
+#define TENO_SCI_SERVER_PORT 3033
+
+#ifdef TENO_DEBUG
+#define TENO_SCI_CLIENT_PORT 30783
+#endif
+
+#endif /* TENO_SOCKET_UNIX_H */
