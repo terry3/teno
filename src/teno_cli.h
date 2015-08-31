@@ -1,8 +1,9 @@
 #ifndef TENO_CLI_H
 #define TENO_CLI_H
 
-#define MAX_CMD_LEN 1024
-#define MAX_CMD_ARGS_SIZE  16
+#define MAX_CMD_LEN           1024
+#define MAX_CMD_ARGS_SIZE     16
+#define MAX_CMD_ARGS_LEN      16
 
 #define TENO_CMD_FUNC static
 

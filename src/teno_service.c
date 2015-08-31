@@ -20,6 +20,7 @@ F_RET teno_service_init_service
     CHK_RET(T_TRUE != g_s_service[ul_sid].b_used, T_ERR);
 
     g_s_service[ul_sid].ul_sid = ul_sid;
+    g_s_service[ul_sid].ul_msg = 0;
     /* create service thread */
     (T_VOID)T_THREAD_CREATE(g_s_service[ul_sid].s_tid,
                             teno_service_proc,
@@ -53,6 +54,7 @@ T_VOID* teno_service_proc(T_VOID *p_param)
 
         if (ps_service->f_proc) {
             /* the hook do not care ps_msg memory */
+            ps_service->ul_msg++;
             ps_service->f_proc(ps_msg);
         }
         /* free ps_msg */

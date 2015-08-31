@@ -40,24 +40,43 @@ T_VOID teno_cli_print_cmd(TENO_CMD *ps_cmd) {
 
 /* display service state: msg queue capacity etc.*/
 TENO_CMD_FUNC
-F_RET teno_cli_cmd_display_service_state(TENO_CMD *pc_cmd) {
-    F_RET       ul_ret    = T_OK;
-    T_UINT32    ul_index  = 0;
+F_RET teno_cli_cmd_display_service_state(TENO_CMD *ps_cmd) {
+    F_RET       ul_ret        = T_OK;
+    T_UINT32    ul_servied_id = 0;
+    T_CHAR      ac_args[MAX_CMD_ARGS_LEN];
+
+    F_BZERO(ac_args, sizeof(ac_args));
+
+    PN_RET(ps_cmd, T_ERR);
 
     printf("GLOBAL_MSG_QUEUE_SIZE:[%d]\n", g_s_queue.ul_size);
-    F_UNUSED(pc_cmd);
 
-    for (ul_index = 0;
-         ul_index < TENO_SERVICE_BUTT;
-         ul_index++) {
-        if (!g_s_service[ul_index].b_used) {
-            continue;
-        }
-
-        printf("SERVICE_ID:[%d]\n", ul_index);
-        printf("SERVICE_MSG_QUEUE_SIZE:[%d]\n",
-               g_s_service[ul_index].s_msg_queue.ul_size);
+    if (ps_cmd->ul_args_size == 0) {
+        printf("Not assign service id\n");
+        return T_OK;
     }
+    /* conver TENO_STR to char array */
+    memcpy(ac_args, 
+           ps_cmd->as_args[0].str,
+           ps_cmd->as_args[0].len);
+
+    ul_servied_id = atoi(ac_args);
+    if (ul_servied_id >= TENO_SERVICE_BUTT) {
+        printf("Input service id is error.[%d]\n", ul_servied_id);
+        return T_OK;
+    }
+
+    if (!g_s_service[ul_servied_id].b_used) {
+        printf("Input service id is not used.[%d]\n", ul_servied_id);
+        return T_OK;
+    }
+
+    /* print service state */
+    printf("SERVICE_ID:[%d]\n", ul_servied_id);
+    printf("SERVICE_MSG_QUEUE_SIZE:[%d]\n",
+           g_s_service[ul_servied_id].s_msg_queue.ul_size);
+    printf("SERVICE_MSG_HANDLED:[%d]\n",
+           g_s_service[ul_servied_id].ul_msg);
 
     return ul_ret;
 }

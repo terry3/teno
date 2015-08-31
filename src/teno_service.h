@@ -22,6 +22,7 @@ typedef enum _teno_service_type
 typedef struct _teno_service
 {
     T_UINT32        ul_sid;     /* service id */
+    T_UINT32        ul_msg;     /* message handled */
     T_THREAD_T      s_tid;      /* service thread id */
     T_MSG_QUEUE     s_msg_queue; /* msg queue */
     SERVICE_PROC    f_proc;      /* service callback func */
