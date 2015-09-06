@@ -12,6 +12,7 @@ typedef enum _teno_service_type
     TENO_SERVICE_TIMER,         /* TODO */
     TENO_SERVICE_CLI,           /* command line interface */
     TENO_SERVICE_SCI,           /* socket command interface */
+    TENO_SERVICE_LOG,           /* logging service */
     TENO_SERVICE_TEST,          /* TEST service */
 
     TENO_DO_NOT_MODIFY_UP,
