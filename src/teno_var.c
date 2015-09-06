@@ -69,6 +69,7 @@ F_RET teno_var_setvar_handler(TENO_CMD *ps_cmd)
 }
 
 /* getvar teno command handler */
+TENO_CMD_FUNC
 T_UINT32 teno_var_getvar_handler(TENO_CMD *ps_cmd)
 {
     F_RET  ul_ret = 0;
@@ -85,6 +86,7 @@ T_UINT32 teno_var_getvar_handler(TENO_CMD *ps_cmd)
 }
 
 /* variables set/get service proc */
+TENO_CMD_FUNC
 F_RET teno_var_proc(T_MSG *ps_msg)
 {
     F_RET ul_ret = T_OK;
