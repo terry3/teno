@@ -5,7 +5,7 @@
 #define MAX_CMD_ARGS_SIZE     16
 #define MAX_CMD_ARGS_LEN      16
 
-#define TENO_CMD_FUNC static
+#define TENO_CMD_FUNC
 
 typedef struct _teno_str TENO_STR;
 
