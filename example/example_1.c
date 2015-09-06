@@ -43,6 +43,7 @@ T_VOID* test_cli(T_VOID *p_param)
         ps_msg->ul_type = TENO_MSG_CLI_CMD;
         strcpy(ps_msg->data, buffer);
         ps_msg->data[strlen(ps_msg->data) - 1] = '\0';
+        ps_msg->ul_length = 100 + 1;
         /* dwStart = GetTickCount(); */
         teno_msg_send(ps_msg);
     }

@@ -3,6 +3,8 @@
 #include "teno_pub.h"
 #include "teno_mq.h"
 #include "teno_msg.h"
+#include "teno_cli.h"
+#include "teno_var.h"
 
 /* check teno message valid */
 F_RET teno_msg_check(T_MSG *ps_msg)
@@ -18,6 +20,13 @@ F_RET teno_msg_check(T_MSG *ps_msg)
 T_VOID teno_msg_print(T_MSG *ps_msg)
 {
     T_UINT32 ul_index = 0;
+    T_UINT32 ul_value = 0;
+
+    ul_value = teno_get_var(VAR_TRACE_T);
+    if (!ul_value) {
+        return;
+    }
+
     PN_RET_N(ps_msg);
     printf("from_sid[%d], to_sid[%d], length[%d], type[%d]\n",
            ps_msg->ul_from_sid,

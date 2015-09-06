@@ -5,6 +5,7 @@
 #include "teno_monitor.h"
 #include "teno_cli.h"
 #include "teno_str.h"
+#include "teno_var.h"
 
 /* command line execute */
 /* contain the command string handle */
@@ -19,6 +20,7 @@ F_RET teno_cli_cmd_exit(TENO_CMD *ps_cmd) {
 /* print the input command & args */
 TENO_CMD_FUNC
 T_VOID teno_cli_print_cmd(TENO_CMD *ps_cmd) {
+    F_RET    ul_ret   = 0;
     T_UINT32 ul_index = 0;
     T_CHAR ac_tmp[MAX_CMD_LEN];
 
@@ -29,10 +31,11 @@ T_VOID teno_cli_print_cmd(TENO_CMD *ps_cmd) {
     strncpy(ac_tmp, ps_cmd->s_cmd.str, ps_cmd->s_cmd.len);
     printf("command name:[%s], args:[%d]\n", ac_tmp, ps_cmd->ul_args_size);
     for (ul_index = 0; ul_index < ps_cmd->ul_args_size; ul_index++) {
-        F_BZERO(ac_tmp, sizeof(ac_tmp));
-        strncpy(ac_tmp,
-                ps_cmd->as_args[ul_index].str,
-                ps_cmd->as_args[ul_index].len);
+        ul_ret = teno_str_cvt_char(&(ps_cmd->as_args[ul_index]),
+                                   ac_tmp,
+                                   sizeof(ac_tmp));
+        /* unused variable ul_ret */
+        F_UNUSED(ul_ret);  // TODO: CHECK THIS!
         printf("args [%d] value:[%s]\n", ul_index, ac_tmp);
     }
     return;
@@ -56,7 +59,7 @@ F_RET teno_cli_cmd_display_service_state(TENO_CMD *ps_cmd) {
         return T_OK;
     }
     /* conver TENO_STR to char array */
-    memcpy(ac_args, 
+    memcpy(ac_args,
            ps_cmd->as_args[0].str,
            ps_cmd->as_args[0].len);
 
@@ -84,9 +87,11 @@ F_RET teno_cli_cmd_display_service_state(TENO_CMD *ps_cmd) {
 /* implements customize command */
 TENO_CMD_HANDLE as_cmd_handler[] =
 {
-    /* name   handler */
-    {"exit" , teno_cli_cmd_exit},
-    {"state", teno_cli_cmd_display_service_state},
+ /* name       handler */
+    {"exit",   teno_cli_cmd_exit},
+    {"state",  teno_cli_cmd_display_service_state},
+    {"setvar", teno_var_setvar_handler},
+    {"getvar", teno_var_getvar_handler},
     // TODO: Add some new command to set/get variable in teno
 };
 
@@ -121,6 +126,8 @@ F_RET teno_cli_exec_cmd(T_CHAR *pc_cmd) {
                      st_cmd.s_cmd.str, st_cmd.s_cmd.len)) {
             /* parse the input command */
             (T_VOID)as_cmd_handler[ul_index].f_cmd_handle(&st_cmd);
+            /* break when handle done */
+            break;
         }
     }
     /* quit teno */

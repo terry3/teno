@@ -2,7 +2,8 @@
 #include "teno_cli.h"
 #include "teno_str.h"
 
-F_RET teno_str_get_str_between /* avoid memory alloc&free take ps_teno_str to args */
+ /* avoid memory alloc&free take ps_teno_str to args */
+F_RET teno_str_get_str_between
 (T_CHAR *pc_str, T_CHAR c_x, TENO_STR *ps_teno_str) {
     T_UINT32 ul_index   = 0;
     T_UINT32 ul_cmd_len = 0;
@@ -126,10 +127,29 @@ T_CHAR* teno_str_cpy2(T_CHAR *pc_src) {
     return t_des;
 }
 
+/* free memory */
 T_VOID teno_safe_free(T_CHAR *pc_src) {
     if (!pc_src) {
         return;
     }
     free(pc_src);
     return;
+}
+
+/* convert teno_str to char* */
+/* initial buffer inside */
+F_RET teno_str_cvt_char
+(TENO_STR *ps_str, T_CHAR *pc_buf, T_UINT32 ul_buf_len) {
+    /* args chk valid */
+    PN_RET(ps_str, T_ERR);
+    PN_RET(pc_buf, T_ERR);
+
+    /* chk is buf len */
+    if (ps_str->len > ul_buf_len - 1) {
+        /* log here, do not have enough buffer size */
+        return T_ERR;
+    }
+    F_BZERO(pc_buf, ul_buf_len);
+    strncpy(pc_buf, ps_str->str, ps_str->len);
+    return T_OK;
 }
