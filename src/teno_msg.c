@@ -4,6 +4,24 @@
 #include "teno_mq.h"
 #include "teno_msg.h"
 
+/* print teno message */
+T_VOID teno_msg_print(T_MSG *ps_msg)
+{
+    T_UINT32 ul_index = 0;
+    PN_RET_N(ps_msg);
+    printf("from_sid[%d], to_sid[%d], length[%d], type[%d]\n",
+           ps_msg->ul_from_sid,
+           ps_msg->ul_to_sid,
+           ps_msg->ul_length,
+           ps_msg->ul_type);
+    printf("body[");
+    /* print message body in memory */
+    for (ul_index = 0;ul_index < ps_msg->ul_length;ul_index++) {
+        printf("%x ", ps_msg->data[ul_index]);
+    }
+    printf("]\n");
+}
+
 /* alloc teno message, failure return NULL */
 T_MSG* teno_msg_alloc_msg(T_UINT32 ul_length)
 {
@@ -27,7 +45,9 @@ T_VOID teno_msg_free_msg(T_MSG *ps_msg)
 /* send teno message, just push the message to que global queue */
 F_RET teno_msg_send(T_MSG *ps_msg)
 {
+    PN_RET(ps_msg, T_ERR);
     /* printf("send msg\n"); */
+    teno_msg_print(ps_msg);
     teno_mq_push_queue(&g_s_queue, ps_msg);
     return T_OK;
 }

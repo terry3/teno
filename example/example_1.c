@@ -82,9 +82,11 @@ int main(int argc, char *argv[])
     for (index =0 ; index < MAX_CNT; index++)
     {
         ps_msg = teno_msg_alloc_msg(100 + 1);
+        F_BZERO(ps_msg, 100 + 1);
         PN_RET(ps_msg, 0);
         ps_msg->ul_to_sid = TENO_SERVICE_TEST;
         sprintf(ps_msg->data, "123123 123 123 %d", index);
+        ps_msg->ul_length = strlen(ps_msg->data) + 1;
         teno_msg_send(ps_msg);
     }
 
