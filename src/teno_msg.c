@@ -4,6 +4,16 @@
 #include "teno_mq.h"
 #include "teno_msg.h"
 
+/* check teno message valid */
+F_RET teno_msg_check(T_MSG *ps_msg)
+{
+    /* pointer */
+    PN_RET(ps_msg, T_ERR);
+    /* length */
+    PN_RET(ps_msg->ul_length != 0, T_ERR);
+    return T_OK;
+}
+
 /* print teno message */
 T_VOID teno_msg_print(T_MSG *ps_msg)
 {
@@ -45,9 +55,13 @@ T_VOID teno_msg_free_msg(T_MSG *ps_msg)
 /* send teno message, just push the message to que global queue */
 F_RET teno_msg_send(T_MSG *ps_msg)
 {
+    F_RET ul_ret = 0;
     PN_RET(ps_msg, T_ERR);
+    ul_ret = teno_msg_check(ps_msg);
+    FR_RET(ul_ret);
     /* printf("send msg\n"); */
     teno_msg_print(ps_msg);
+    /* if teno message length is 0, return error */
     teno_mq_push_queue(&g_s_queue, ps_msg);
     return T_OK;
 }
